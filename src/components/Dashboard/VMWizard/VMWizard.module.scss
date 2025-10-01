@@ -1,0 +1,141 @@
+:root {
+  --wizard-header-height: 40px;
+  --wizard-header-bg: var(--color-white);
+  --wizard-header-text: #705289;
+}
+
+.wizard {
+  background: var(--color-white);
+  width: 684px;
+
+  height: 586px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: var(--global-font-family);
+  font-weight: var(--global-font-weight);
+  font-size: var(--global-font-size);
+  line-height: var(--global-line-height);
+  letter-spacing: var(--global-letter-spacing);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--wizard-header-height);
+  padding: 0 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: var(--wizard-header-bg);
+  border-radius: 12px 12px 0 0;
+}
+
+.header div {
+  margin: 0;
+  font-weight: var(--global-font-weight);
+  color: var(--wizard-header-text);
+  line-height: 1.2;
+  font-size: var(--global-font-size);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--wizard-header-text);
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  outline: none;
+}
+
+.closeBtn:hover {
+  background-color: rgba(112, 82, 137, 0.1);
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.illustration {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .wizard {
+    max-width: 95%;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+
+  .content {
+    padding: 24px;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .stepContent h1 {
+    font-size: 24px;
+  }
+
+  .illustration {
+    height: 100px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    padding: 12px;
+  }
+}

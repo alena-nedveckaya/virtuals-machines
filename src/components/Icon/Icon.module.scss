@@ -1,0 +1,18 @@
+.icon {
+  // Принудительно перезаписываем цвета в SVG
+  svg {
+    fill: currentColor !important;
+
+    path {
+      fill: currentColor !important;
+    }
+
+    rect {
+      fill: currentColor !important;
+    }
+
+    circle {
+      fill: currentColor !important;
+    }
+  }
+}

@@ -27,13 +27,16 @@
   --text-default-primary: #212529;
   --text-default-secondary: #6b7280;
   --text-default-muted: #9ca3af;
-  --bg-primary: #ffffff;
+  --bg-primary: var(--color-white);
   --bg-secondary: #f8fafc;
   --border-default: #e5e7eb;
   --accent-primary: #4f46e5;
   --status-success: #10b981;
   --status-error: #ef4444;
   --status-warning: #f59e0b;
+
+  /* White color variable */
+  --color-white: #ffffff;
 
   /* Input colors */
   --input-border: #79747e;
@@ -44,6 +47,9 @@
   --input-label: #8b5cf6;
   --input-helper: #6b7280;
   --input-error: #ba1a1a;
+  --input-error-hover: #a01717;
+  --input-bg: var(--color-white);
+  --input-bg-hover: #f9fafb;
 }
 
 a {
@@ -104,7 +110,7 @@ button:active {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: var(--color-white);
   }
   a:hover {
     color: #747bff;

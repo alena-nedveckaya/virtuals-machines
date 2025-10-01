@@ -1,65 +1,59 @@
 import { Link, useLocation } from 'react-router-dom';
-import './Header.css';
+import classes from './Header.module.scss';
+import { Icon } from '@/components';
+
+interface MenuItem {
+  path: string;
+  label: string;
+  hasDropdown?: boolean;
+}
 
 const Header = () => {
   const location = useLocation();
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { path: '/', label: 'Dashboard' },
     { path: '/events', label: 'Events' },
-    { path: '/help', label: 'Help' },
+    { path: '/help', label: 'Help', hasDropdown: true },
   ];
 
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="logo">
-          <div className="logo-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#4f46e5" strokeWidth="2" fill="none" />
-              <path d="M2 17L12 22L22 17" stroke="#4f46e5" strokeWidth="2" fill="none" />
-              <path d="M2 12L12 17L22 12" stroke="#4f46e5" strokeWidth="2" fill="none" />
-            </svg>
+    <header className={classes.header}>
+      <div className={classes.container}>
+        <div className={classes.logo}>
+          <div className={classes.logoIcon}>
+            <Icon name="logo" size={78} />
           </div>
-          <span className="logo-text">Logo</span>
         </div>
 
-        <nav className="nav">
-          <ul className="nav-list">
+        <nav className={classes.nav}>
+          <ul className={classes.navList}>
             {menuItems.map((item) => (
-              <li key={item.path} className="nav-item">
+              <li key={item.path} className={classes.navItem}>
                 <Link
                   to={item.path}
-                  className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                  className={`${classes.navLink} ${location.pathname === item.path ? classes.active : ''}`}
                 >
                   {item.label}
+                  {item.hasDropdown && (
+                    <Icon name="chevron-down" size={16} className={classes.dropdownIcon} />
+                  )}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="header-actions">
-          <button className="notification-btn">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 2C6.686 2 4 4.686 4 8V13L2 15V16H18V15L16 13V8C16 4.686 13.314 2 10 2Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                fill="none"
-              />
-              <path
-                d="M8 16V17C8 18.105 8.895 19 10 19C11.105 19 12 18.105 12 17V16"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                fill="none"
-              />
-            </svg>
-            <span className="notification-dot"></span>
+        <div className={classes.actions}>
+          <button className={classes.notificationBtn}>
+            <Icon name="bell" size={20} />
+            <span className={classes.notificationDot}>
+              <Icon name="dot" size={8} />
+            </span>
           </button>
 
-          <div className="user-avatar">
-            <div className="avatar-circle">
+          <div className={classes.userAvatar}>
+            <div className={classes.avatarCircle}>
               <span>U</span>
             </div>
           </div>

@@ -1,4 +1,5 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { mockVMs } from '@/data/mockVMs';
 
 export interface VM {
   id: string;
@@ -19,76 +20,47 @@ export interface VM {
 
 interface VMState {
   vms: VM[];
+  loading: boolean;
+  error: string | null;
 }
 
+// Async thunk for creating VM
+export const createVM = createAsyncThunk(
+  'vms/createVM',
+  async (vmData: Pick<VM, 'name' | 'cpu' | 'memory'>, { rejectWithValue }) => {
+    try {
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Simulate backend response
+      const newVM: VM = {
+        ...vmData,
+        id: `vm_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        createdAt: new Date().toISOString(),
+        status: 'running' as const,
+        uptime: '0:00:00:00',
+        alerts: { type: 'good' as const, count: 0 },
+        storage: 10,
+        os: 'Ubuntu 20.04',
+        hostServer: '43C07-27',
+      };
+
+      // Simulate random success/failure (90% success rate)
+      if (Math.random() < 0.9) {
+        return newVM;
+      } else {
+        throw new Error('Failed to create VM');
+      }
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+    }
+  },
+);
+
 const initialState: VMState = {
-  vms: [
-    {
-      id: '3ad83858-e748-11ee',
-      name: 'Web Server',
-      status: 'running',
-      hostServer: '43C07-27',
-      cpu: 7.72,
-      memory: 16.68,
-      storage: 50,
-      os: 'Ubuntu 22.04',
-      uptime: '4:12:41:09',
-      alerts: { type: 'important', count: 3 },
-      createdAt: new Date(Date.now() - 86400000).toISOString(),
-    },
-    {
-      id: '3ad83859-e748-11ee',
-      name: 'Database Server',
-      status: 'stopped',
-      hostServer: '43C07-27',
-      cpu: 2.24,
-      memory: 21.68,
-      storage: 100,
-      os: 'CentOS 8',
-      uptime: '4:12:41:09',
-      alerts: { type: 'critical', count: 3 },
-      createdAt: new Date(Date.now() - 172800000).toISOString(),
-    },
-    {
-      id: '3ad8385a-e748-11ee',
-      name: 'Development VM',
-      status: 'running',
-      hostServer: '43C07-27',
-      cpu: 6.74,
-      memory: 45.38,
-      storage: 25,
-      os: 'Ubuntu 20.04',
-      uptime: '4:12:41:09',
-      alerts: { type: 'moderate', count: 5 },
-      createdAt: new Date(Date.now() - 259200000).toISOString(),
-    },
-    {
-      id: '3ad8385b-e748-11ee',
-      name: 'Test Server',
-      status: 'running',
-      hostServer: '43C07-26',
-      cpu: 5.72,
-      memory: 5.68,
-      storage: 30,
-      os: 'Windows Server 2019',
-      uptime: '4:12:41:09',
-      alerts: { type: 'good', count: 0 },
-      createdAt: new Date(Date.now() - 345600000).toISOString(),
-    },
-    {
-      id: '3ad8385c-e748-11ee',
-      name: 'Backup Server',
-      status: 'stopped',
-      hostServer: '43C07-23',
-      cpu: 2.24,
-      memory: 21.68,
-      storage: 200,
-      os: 'CentOS 7',
-      uptime: '4:12:41:09',
-      alerts: { type: 'critical', count: 1 },
-      createdAt: new Date(Date.now() - 432000000).toISOString(),
-    },
-  ],
+  vms: mockVMs,
+  loading: false,
+  error: null,
 };
 
 const vmSlice = createSlice({
@@ -103,17 +75,27 @@ const vmSlice = createSlice({
       };
       state.vms.push(newVM);
     },
-    updateVM: (state, action: PayloadAction<{ id: string; updates: Partial<VM> }>) => {
-      const index = state.vms.findIndex(vm => vm.id === action.payload.id);
-      if (index !== -1) {
-        state.vms[index] = { ...state.vms[index], ...action.payload.updates };
-      }
+    clearError: (state) => {
+      state.error = null;
     },
-    deleteVM: (state, action: PayloadAction<string>) => {
-      state.vms = state.vms.filter(vm => vm.id !== action.payload);
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createVM.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createVM.fulfilled, (state, action) => {
+        state.loading = false;
+        state.vms.push(action.payload);
+        state.error = null;
+      })
+      .addCase(createVM.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
-export const { addVM, updateVM, deleteVM } = vmSlice.actions;
+export const { addVM, clearError } = vmSlice.actions;
 export default vmSlice.reducer;

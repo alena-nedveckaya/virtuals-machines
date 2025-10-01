@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import './Checkbox.css';
+import classes from './Checkbox.module.scss';
 
 interface CheckboxProps {
   id: string;
@@ -20,19 +19,13 @@ const Checkbox = ({
   disabled = false,
   required = false,
 }: CheckboxProps) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const handleFocus = () => {};
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
+  const handleBlur = () => {};
 
   return (
-    <div className={`checkbox-container ${disabled ? 'disabled' : ''}`}>
-      <div className="checkbox-wrapper">
+    <div className={`${classes.container} ${disabled ? classes.disabled : ''}`}>
+      <div className={classes.wrapper}>
         <input
           type="checkbox"
           id={id}
@@ -43,9 +36,9 @@ const Checkbox = ({
           onBlur={handleBlur}
           disabled={disabled}
           required={required}
-          className="checkbox-input"
+          className={classes.input}
         />
-        <label htmlFor={id} className="checkbox-label">
+        <label htmlFor={id} className={classes.label}>
           {label}
         </label>
       </div>

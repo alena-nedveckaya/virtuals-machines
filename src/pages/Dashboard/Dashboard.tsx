@@ -1,39 +1,36 @@
 import { useState } from 'react';
-import { useAppSelector, useAppDispatch } from '@/hooks/redux';
-import { addVM } from '@/store/slices/vmSlice';
-import { StateCard, TrendCard, VMTable, VMWizard } from '@/components';
-import './Dashboard.css';
+import { useAppSelector } from '@/hooks/redux';
+import { Button, Icon, StateCard, TrendCard, VMTable, VMWizard } from '@/components';
+import classes from './Dashboard.module.scss';
 
 const Dashboard = () => {
   const { vms } = useAppSelector((state) => state.vms);
-  const dispatch = useAppDispatch();
   const [isWizardOpen, setIsWizardOpen] = useState(false);
 
-  const handleCreateVM = (vmData: any) => {
-    dispatch(addVM(vmData));
-    setIsWizardOpen(false);
-  };
-
   return (
-    <div className="dashboard">
-      <div className="dashboard-cards">
+    <div className={classes.container}>
+      <div className={classes.cards}>
         <StateCard vms={vms} />
         <TrendCard />
       </div>
 
-      <div className="vm-section">
-        <div className="vm-section-header">
-          <h2>Virtual machines {vms.length}</h2>
-          <button className="new-vm-btn" onClick={() => setIsWizardOpen(true)}>
-            + New
-          </button>
+      <div className={classes.vmSection}>
+        <div className={classes.header}>
+          <h2 className={classes.title}>Virtual machines {vms.length}</h2>
+          <Button
+            type="button"
+            variant="primary"
+            onClick={() => setIsWizardOpen(true)}
+            className={classes.newVmBtn}
+          >
+            <Icon name="plus" size={16} color="white" />{' '}
+            <span className={classes.newVmBtnText}>New</span>
+          </Button>
         </div>
         <VMTable vms={vms} />
       </div>
 
-      {isWizardOpen && (
-        <VMWizard onClose={() => setIsWizardOpen(false)} onCreate={handleCreateVM} />
-      )}
+      {isWizardOpen && <VMWizard onClose={() => setIsWizardOpen(false)} />}
     </div>
   );
 };

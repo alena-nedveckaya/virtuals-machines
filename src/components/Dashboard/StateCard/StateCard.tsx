@@ -1,14 +1,14 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { type VM } from '@/store/slices/vmSlice';
-import './StateCard.css';
+import classes from './StateCard.module.scss';
 
 interface StateCardProps {
   vms: VM[];
 }
 
 const StateCard = ({ vms }: StateCardProps) => {
-  const runningVMs = vms.filter(vm => vm.status === 'running').length;
-  const stoppedVMs = vms.filter(vm => vm.status === 'stopped').length;
+  const runningVMs = vms.filter((vm) => vm.status === 'running').length;
+  const stoppedVMs = vms.filter((vm) => vm.status === 'stopped').length;
   const totalVMs = vms.length;
 
   const data = [
@@ -17,13 +17,13 @@ const StateCard = ({ vms }: StateCardProps) => {
   ];
 
   return (
-    <div className="state-card">
-      <div className="card-header">
+    <div className={classes.card}>
+      <div className={classes.header}>
         <h3>State</h3>
       </div>
-      
-      <div className="state-content">
-        <div className="pie-chart-container">
+
+      <div className={classes.content}>
+        <div className={classes.pieChart}>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
@@ -41,21 +41,21 @@ const StateCard = ({ vms }: StateCardProps) => {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          
-          <div className="center-text">
-            <div className="total-number">{totalVMs}</div>
-            <div className="total-label">Total number</div>
+
+          <div className={classes.centerText}>
+            <div className={classes.totalNumber}>{totalVMs}</div>
+            <div className={classes.totalLabel}>Total number</div>
           </div>
         </div>
-        
-        <div className="legend">
-          <div className="legend-item">
-            <div className="legend-color" style={{ backgroundColor: '#ef4444' }}></div>
-            <span className="legend-text">{stoppedVMs} Stopped</span>
+
+        <div className={classes.legend}>
+          <div className={classes.legendItem}>
+            <div className={classes.legendColor} style={{ backgroundColor: '#ef4444' }}></div>
+            <span className={classes.legendText}>{stoppedVMs} Stopped</span>
           </div>
-          <div className="legend-item">
-            <div className="legend-color" style={{ backgroundColor: '#10b981' }}></div>
-            <span className="legend-text">{runningVMs} Running</span>
+          <div className={classes.legendItem}>
+            <div className={classes.legendColor} style={{ backgroundColor: '#10b981' }}></div>
+            <span className={classes.legendText}>{runningVMs} Running</span>
           </div>
         </div>
       </div>

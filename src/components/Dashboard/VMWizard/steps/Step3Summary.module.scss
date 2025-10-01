@@ -1,0 +1,59 @@
+.stepContent {
+  h1 {
+    margin: 0 0 16px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 28px;
+  }
+
+  p {
+    margin: 0 0 32px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 20px;
+    font-weight: 400;
+  }
+}
+
+.card {
+  position: relative;
+  background: #faf5ff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 1px solid #f1e6ff;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  padding: 10px 0;
+
+  &:last-child {
+    height: 40px;
+  }
+}
+
+.label {
+  color: var(--text-secondary);
+}
+
+.value {
+  color: var(--text-primary);
+}
+
+.divider {
+  height: 1px;
+  background: #efe7f5;
+}
+
+.edit {
+  position: absolute;
+  right: 12px;
+  bottom: 0;
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+}

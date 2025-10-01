@@ -1,0 +1,71 @@
+.sidebar {
+  background: var(--brand-primary);
+  color: var(--color-white);
+  padding: 32px 24px;
+  width: 244px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.titleSecondary {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc4ce;
+  border: none;
+  margin: 24px 0;
+  opacity: 0.3;
+}
+
+.stepsNav {
+  flex: 1;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.stepItem.active {
+  font-weight: 500;
+}
+
+.stepItem.completed {
+  opacity: 0.8;
+}
+
+.stepIcon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.stepTitle {
+  flex: 1;
+}
+
+.sidebarIllustration {
+  position: absolute;
+  bottom: -6px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    padding: 24px;
+  }
+}

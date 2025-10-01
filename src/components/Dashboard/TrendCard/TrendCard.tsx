@@ -1,59 +1,86 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Area, AreaChart } from 'recharts';
-import './TrendCard.css';
+import { useState } from 'react';
+import { XAxis, YAxis, CartesianGrid, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { mockTrendData } from '@/data/mockTrendData';
+import { Select, type SelectOption } from '@/components';
+import classes from './TrendCard.module.scss';
 
 const TrendCard = () => {
-  // Mock data for the trend chart
-  const data = [
-    { date: '11/06', value: 200 },
-    { date: '13/06', value: 400 },
-    { date: '15/06', value: 600 },
-    { date: '17/06', value: 800 },
-    { date: '19/06', value: 1200 },
-    { date: '21/06', value: 1500 },
-    { date: '23/06', value: 1400 },
-    { date: '25/06', value: 1300 },
-    { date: '27/06', value: 1200 },
+  const [selectedPeriod, setSelectedPeriod] = useState('14');
+
+  // Options for the select dropdown
+  const timeOptions: SelectOption[] = [
+    { value: '7', label: 'Last 7 days' },
+    { value: '14', label: 'Last 14 days' },
+    { value: '30', label: 'Last 30 days' },
   ];
 
+  // Use imported mock data
+  const allData = mockTrendData;
+
+  // Filter data based on selected period
+  const getFilteredData = () => {
+    const days = parseInt(selectedPeriod);
+    return allData.slice(-days);
+  };
+
+  const data = getFilteredData();
+
+  // Calculate dynamic Y-axis domain based on filtered data
+  const getYAxisDomain = () => {
+    if (data.length === 0) return [0, 2000];
+
+    const maxValue = Math.max(...data.map((d) => d.value));
+    const minValue = Math.min(...data.map((d) => d.value));
+
+    // Add some padding (10% above max, 10% below min)
+    const padding = (maxValue - minValue) * 0.1;
+    const max = Math.ceil(maxValue + padding);
+    const min = Math.max(0, Math.floor(minValue - padding));
+
+    return [min, max];
+  };
+
+  const [yMin, yMax] = getYAxisDomain();
+
   return (
-    <div className="trend-card">
-      <div className="card-header">
-        <h3>Trend</h3>
-        <select className="time-selector">
-          <option value="14">Last 14 days</option>
-          <option value="7">Last 7 days</option>
-          <option value="30">Last 30 days</option>
-        </select>
+    <div className={classes.card}>
+      <div className={classes.header}>
+        <h3 className={classes.title}>Trend</h3>
+        <Select
+          options={timeOptions}
+          value={selectedPeriod}
+          onChange={setSelectedPeriod}
+          className={classes.timeSelector}
+        />
       </div>
-      
-      <div className="trend-chart">
+
+      <div className={classes.chart}>
         <ResponsiveContainer width="100%" height={200}>
           <AreaChart data={data}>
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                <stop offset="10%" stopColor="var(--brand-primary)" stopOpacity={0.3} />
+                <stop offset="90%" stopColor="var(--brand-primary)" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-            <XAxis 
-              dataKey="date" 
+            <XAxis
+              dataKey="date"
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: '#6b7280' }}
             />
-            <YAxis 
+            <YAxis
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: '#6b7280' }}
-              domain={[0, 2000]}
-              ticks={[0, 500, 1000, 1500, 2000]}
+              domain={[yMin, yMax]}
               tickFormatter={(value) => `${value} TB`}
             />
             <Area
               type="monotone"
               dataKey="value"
-              stroke="#4f46e5"
+              stroke="var(--brand-primary)"
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#colorValue)"
@@ -66,5 +93,3 @@ const TrendCard = () => {
 };
 
 export default TrendCard;
-
-

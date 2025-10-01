@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Icon } from '@/components';
-import './Input.css';
+import classes from './Input.module.scss';
 
 interface InputProps {
   id: string;
@@ -68,17 +68,16 @@ const Input = ({
     if (!measureRef.current) return;
     const text = String(value ?? '');
     measureRef.current.textContent = text;
-    console.log(measureRef.current, measureRef.current.offsetWidth);
     setTextWidth(measureRef.current.offsetWidth || 0);
   }, [value, type, isFocused]);
 
   return (
-    <div className={`input-container ${error ? 'error' : ''} ${disabled ? 'disabled' : ''}`}>
-      <div className="input-wrapper">
+    <div
+      className={`${classes.container} ${error ? classes.error : ''} ${disabled ? classes.disabled : ''}`}
+    >
+      <div className={classes.wrapper}>
         {/* Invisible measurer for typed text width */}
-        <span className="input-measure" ref={measureRef} aria-hidden="true">
-          0
-        </span>
+        <span className={classes.measure} ref={measureRef} aria-hidden="true"></span>
         <input
           ref={inputRef}
           id={id}
@@ -94,40 +93,50 @@ const Input = ({
           min={min}
           max={max}
           disabled={disabled}
-          className={`input-field ${className} ${showStepper ? 'with-stepper' : ''}`}
+          className={`${classes.field} ${className} ${showStepper ? classes.withStepper : ''}`}
         />
-        <label htmlFor={id} className={`input-label ${isFloating ? 'floating' : ''}`}>
+        <label htmlFor={id} className={`${classes.label} ${isFloating ? classes.floating : ''}`}>
           {label}
         </label>
         {suffixWhileTyping && (isFocused || String(value || '').length > 0) && (
-          <span className="input-suffix" style={{ left: `${16 + textWidth}px` }} aria-hidden="true">
+          <span
+            className={classes.suffix}
+            style={{ left: `${19 + textWidth}px` }}
+            aria-hidden="true"
+          >
             {suffixWhileTyping}
           </span>
         )}
         {showStepper && (
-          <div className="input-stepper">
+          <div className={classes.stepper}>
             <button
               type="button"
-              className="stepper-btn stepper-up"
+              className={classes.stepperBtn}
               onClick={onIncrement}
               disabled={disabled}
             >
-              <Icon name="state-layer" size={20} className="stepper-icon stepper-up-icon" />
+              <Icon
+                name="state-layer"
+                size={20}
+                className={`${classes.stepperIcon} ${classes.upIcon}`}
+              />
             </button>
             <button
               type="button"
-              className="stepper-btn stepper-down"
+              className={classes.stepperBtn}
               onClick={onDecrement}
               disabled={disabled}
             >
-              <Icon name="state-layer" size={20} className="stepper-icon stepper-down-icon" />
+              <Icon
+                name="state-layer"
+                size={20}
+                className={`${classes.stepperIcon} ${classes.downIcon}`}
+              />
             </button>
           </div>
         )}
       </div>
-      {(hint || error) && (
-        <span className={`input-hint ${error ? 'error' : ''}`}>{error || hint}</span>
-      )}
+      {(hint || error) && <span className={classes.hint}>{error || hint}</span>}
     </div>
   );
 };

@@ -1,73 +1,136 @@
-# React + TypeScript + Vite
+# Virtual Machines — React + TypeScript (Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript single-page app for managing virtual machines. It features a modern multi-step modal wizard, reusable UI primitives, path aliases, and a clean component structure.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 18 + TypeScript
+- Vite
+- React Router
+- Redux Toolkit
+- Plain CSS with CSS variables for theming
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 18+ (LTS recommended)
+- npm 9+
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+- Starts Vite dev server at http://localhost:5173 (default)
+
+### Build
+
+```bash
+npm run build
+```
+
+- Creates a production build in `dist/`
+
+### Preview production build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+src/
+  assets/                  # SVGs and static assets
+  components/
+    Checkbox/              # Reusable Checkbox component
+    Icon/                  # Icon wrapper around SVG assets
+    Input/                 # Floating label Input with stepper & suffix
+    RamScale/              # RAM scale visualization with indicator
+    VirtualMachines/
+      VMWizard/
+        VMWizard.tsx
+        VMWizard.css
+        steps/
+          Step1Name.tsx
+          Step2GeneralSettings.tsx
+  pages/
+  store/
+  hooks/
+  App.tsx
+  main.tsx
+```
+
+## Path Aliases
+
+TypeScript and Vite use `@` to reference `src/`.
+
+- tsconfig: `"paths": { "@/*": ["src/*"] }`
+- vite: `resolve.alias['@'] = fileURLToPath(new URL('./src', import.meta.url))`
+
+Example:
+
+```ts
+import { Layout } from '@/components';
+import { Dashboard } from '@/pages';
+```
+
+## Theming & Global Styles
+
+- Global CSS variables in `src/index.css` for typography and colors:
+  - `--brand-primary`, `--brand-primary-hover`
+  - `--text-primary`, `--text-secondary`
+  - Input states: border, focus, error, placeholder
+- Roboto is loaded via Google Fonts in `index.html`.
+
+## Key UI Components
+
+### VMWizard (Modal)
+
+- Multi-step wizard with a sidebar, header, and content area
+- Steps: Name (with validation) → General Settings (CPU, RAM, checkbox, RAM scale)
+
+### Input
+
+- Floating label; focus/value-driven
+- Number stepper using shared SVG icon
+- `suffixWhileTyping` (e.g., `/50 GB`) placed right after typed text
+- Error and disabled states
+
+### Checkbox
+
+- Accessible, custom-styled checkbox with hover/focus states
+
+### Icon
+
+- Centralized SVG icon loader (`check`, `check-indeterminate`, `state-layer`, ...)
+
+### RamScale
+
+- Visualizes segments: base (0–16), recommended (16–32), warning (32–50)
+- Under-bar labels (0, 16, 32, 50) and overlay bracket with caption
+- Movable indicator (`indicator.svg`) reflecting current RAM value
+
+## Troubleshooting
+
+- Node types error: install `@types/node` and ensure `tsconfig.node.json` includes `"types": ["node"]`.
+- Path aliases: confirm both Vite alias and TS `paths` are aligned.
+- Router “No routes matched”: check nested vs absolute route paths.
+
+## Scripts
+
+- `dev`: start dev server
+- `build`: production build
+- `preview`: preview built app
+
+---
+
+Maintained with care. Contributions are welcome.

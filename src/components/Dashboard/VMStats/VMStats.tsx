@@ -1,5 +1,5 @@
 import { type VM } from '@/store/slices/vmSlice';
-import './VMStats.css';
+import classes from './VMStats.module.scss';
 
 interface VMStatsProps {
   vms: VM[];
@@ -22,13 +22,13 @@ const VMStats = ({ vms }: VMStatsProps) => {
   ];
 
   return (
-    <div className="vm-stats">
+    <div className={classes.stats}>
       {stats.map((stat) => (
-        <div key={stat.label} className="stat-card">
-          <div className="stat-value" style={{ color: stat.color }}>
+        <div key={stat.label} className={classes.card}>
+          <div className={classes.value} style={{ color: stat.color }}>
             {stat.value}
           </div>
-          <div className="stat-label">{stat.label}</div>
+          <div className={classes.label}>{stat.label}</div>
         </div>
       ))}
     </div>
