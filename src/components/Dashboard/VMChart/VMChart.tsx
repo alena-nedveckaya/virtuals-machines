@@ -11,7 +11,7 @@ import {
   Cell,
 } from 'recharts';
 import { type VM } from '@/store/slices/vmSlice';
-import './VMChart.css';
+import classes from './VMChart.module.scss';
 
 interface VMChartProps {
   vms: VM[];
@@ -26,28 +26,22 @@ const VMChart = ({ vms }: VMChartProps) => {
     storage: vm.storage,
   }));
 
-  // Data for status distribution pie chart
   const statusData = [
     {
       name: 'Running',
       value: vms.filter((vm) => vm.status === 'running').length,
-      color: '#10b981',
+      color: '#459E74',
     },
     {
       name: 'Stopped',
       value: vms.filter((vm) => vm.status === 'stopped').length,
-      color: '#ef4444',
-    },
-    {
-      name: 'Pending',
-      value: vms.filter((vm) => vm.status === 'pending').length,
-      color: '#f59e0b',
+      color: '#DC3545',
     },
   ];
 
   return (
-    <div className="vm-charts">
-      <div className="chart-container">
+    <div className={classes.charts}>
+      <div className={classes.container}>
         <h3>Resource Usage</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={resourceData}>
@@ -62,7 +56,7 @@ const VMChart = ({ vms }: VMChartProps) => {
         </ResponsiveContainer>
       </div>
 
-      <div className="chart-container">
+      <div className={classes.container}>
         <h3>VM Status Distribution</h3>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
@@ -71,7 +65,7 @@ const VMChart = ({ vms }: VMChartProps) => {
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+              label={(entry: any) => `${entry.name} ${(entry.percent * 100).toFixed(0)}%`}
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"

@@ -1,8 +1,8 @@
-import './EmptyPage.css';
+import classes from './EmptyPage.module.scss';
 
 const Help = () => {
   return (
-    <div className="empty-page">
+    <div className={classes.emptyPage}>
       <h1>Help</h1>
       <p>This page is under construction</p>
     </div>

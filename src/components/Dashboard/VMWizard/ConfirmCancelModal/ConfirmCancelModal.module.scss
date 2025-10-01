@@ -1,0 +1,56 @@
+.modal {
+  background: #ffecea;
+  padding: 32px;
+  max-width: 312px;
+  width: 312px;
+  text-align: center;
+}
+
+.icon {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.message {
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: end;
+
+  .leaveBtn {
+    background-color: var(--input-error);
+    color: var(--color-white);
+
+    &:hover:not(:disabled) {
+      background-color: var(--input-error-hover);
+    }
+  }
+
+  .cancelBtn {
+    background: var(--input-bg);
+    color: var(--text-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--input-bg-hover);
+      color: var(--text-primary);
+    }
+  }
+}

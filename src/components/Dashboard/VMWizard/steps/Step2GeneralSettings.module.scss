@@ -1,0 +1,37 @@
+.stepContent {
+  h1 {
+    margin: 0 0 16px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 28px;
+  }
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  &.error {
+    label {
+      color: var(--input-error);
+    }
+    input,
+    select {
+      border-color: var(--input-border-error);
+    }
+  }
+}

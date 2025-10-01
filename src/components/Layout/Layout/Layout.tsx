@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/components';
-import './Layout.css';
+import classes from './Layout.module.scss';
 
 const Layout = () => {
   return (
-    <div className="layout">
+    <div className={classes.layout}>
       <Header />
-      <main className="main-content">
+      <main className={classes.mainContent}>
         <Outlet />
       </main>
     </div>

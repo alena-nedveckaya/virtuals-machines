@@ -1,0 +1,85 @@
+.ramviz {
+  margin-top: 16px;
+}
+
+.bar {
+  position: relative;
+  height: 6px;
+  background: #f6eef6;
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.pointer {
+  position: absolute;
+  top: -14px;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 15px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+
+  &.base {
+    background: #f6eef6;
+  }
+
+  &.recommended {
+    background: #3ac140;
+  }
+
+  &.warning {
+    background: #f4de19;
+  }
+}
+
+.scale {
+  position: relative;
+  height: 20px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  position: relative;
+  font-size: 12px;
+  color: var(--text-secondary);
+  z-index: 2;
+  background: var(--color-white);
+  padding: 0 4px;
+}
+
+.overlay {
+  position: relative;
+  height: 32px;
+  margin-top: 6px;
+}
+
+.recommendation {
+  position: absolute;
+  top: -48px;
+  left: 0;
+  right: 0;
+  border: 1px solid #ccc4ce;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top: none;
+  height: 50px;
+  z-index: 1;
+}
+
+.recommendationText {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: var(--text-secondary);
+}

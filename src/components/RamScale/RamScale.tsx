@@ -1,4 +1,4 @@
-import './RamScale.css';
+import classes from './RamScale.module.scss';
 import indicator from '@/assets/indicator.svg';
 
 interface RamScaleProps {
@@ -21,36 +21,39 @@ const RamScale = ({
   const currentPct = clamp((currentGb / maxGb) * 100, 0, 100);
 
   return (
-    <div className="ramviz">
-      <div className="ramviz-bar">
-        <div className="ramviz-segment base" style={{ left: '0%', width: `${startPct}%` }}></div>
+    <div className={classes.ramviz}>
+      <div className={classes.bar}>
         <div
-          className="ramviz-segment recommended"
+          className={`${classes.segment} ${classes.base}`}
+          style={{ left: '0%', width: `${startPct}%` }}
+        ></div>
+        <div
+          className={`${classes.segment} ${classes.recommended}`}
           style={{ left: `${startPct}%`, width: `${recWidthPct}%` }}
         ></div>
         <div
-          className="ramviz-segment warning"
+          className={`${classes.segment} ${classes.warning}`}
           style={{ left: `${endPct}%`, width: `${100 - endPct}%` }}
         ></div>
 
         <img
           src={indicator}
           alt="indicator"
-          className="ramviz-pointer"
+          className={classes.pointer}
           style={{ left: `${currentPct}%` }}
         />
       </div>
 
-      <div className="ramviz-scale">
-        <span className="ramviz-label">0 GB</span>
-        <span className="ramviz-label">{recommendedStartGb} GB</span>
-        <span className="ramviz-label">{recommendedEndGb} GB</span>
-        <span className="ramviz-label end">{maxGb} GB</span>
+      <div className={classes.scale}>
+        <span className={classes.label}>0 GB</span>
+        <span className={classes.label}>{recommendedStartGb} GB</span>
+        <span className={classes.label}>{recommendedEndGb} GB</span>
+        <span className={classes.label}>{maxGb} GB</span>
       </div>
 
-      <div className="ramviz-overlay" style={{ left: `${startPct}%`, width: `${recWidthPct}%` }}>
-        <div className="ramviz-recommendation"></div>
-        <div className="ramviz-recommendation-text">Recommended</div>
+      <div className={classes.overlay} style={{ left: `${startPct}%`, width: `${recWidthPct}%` }}>
+        <div className={classes.recommendation}></div>
+        <div className={classes.recommendationText}>Recommended</div>
       </div>
     </div>
   );
