@@ -5,6 +5,8 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
+  // For GitHub Pages deployments, set VITE_BASE to "/<repo>/"
+  base: process.env.VITE_BASE || '/',
   plugins: [
     react(),
     svgr({
