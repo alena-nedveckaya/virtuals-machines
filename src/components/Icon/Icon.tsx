@@ -37,6 +37,7 @@ interface IconProps {
   className?: string;
   color?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
 const iconMap = {
@@ -56,7 +57,7 @@ const iconMap = {
   dot: DotIcon,
 };
 
-const Icon = ({ name, size = 16, className = '', color, style }: IconProps) => {
+const Icon = ({ name, size = 16, className = '', color, style, onClick }: IconProps) => {
   const IconComponent = iconMap[name];
 
   if (!IconComponent) {
@@ -75,6 +76,7 @@ const Icon = ({ name, size = 16, className = '', color, style }: IconProps) => {
         color: color || 'currentColor',
         ...style,
       }}
+      onClick={onClick}
     />
   );
 };
