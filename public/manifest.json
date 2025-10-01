@@ -1,0 +1,17 @@
+{
+  "name": "Virtual Machines Manager",
+  "short_name": "VM Manager",
+  "description": "Create and manage your virtual machines with ease",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5F3196",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
