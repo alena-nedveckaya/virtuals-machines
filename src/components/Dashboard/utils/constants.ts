@@ -1,5 +1,4 @@
-import type { VM } from '@/store/slices/vmSlice';
-import type { VMStatus, AlertType, AlertConfig } from './types';
+import type { AlertType, AlertConfig } from '../types';
 
 export const ALERT_CONFIGS: Record<AlertType, AlertConfig> = {
   critical: {
@@ -39,17 +38,3 @@ export const STATUS_CONFIGS = {
     class: 'pending',
   },
 } as const;
-
-export const getStatusClass = (status: string): string => {
-  return STATUS_CONFIGS[status as VMStatus]?.class || '';
-};
-
-export const getAlertConfig = (type: AlertType): AlertConfig => {
-  return ALERT_CONFIGS[type];
-};
-
-export const getAlertText = (alerts: VM['alerts']): string => {
-  if (alerts.type === 'good') return 'All good';
-  const config = ALERT_CONFIGS[alerts.type as AlertType];
-  return `${alerts.count} ${config.label}`;
-};
