@@ -7,10 +7,9 @@ interface Step1NameProps {
   };
   errors: { [key: string]: { message?: string } };
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  showErrors?: boolean;
 }
 
-const Step1Name = ({ formData, errors, onChange, showErrors = true }: Step1NameProps) => {
+const Step1Name = ({ formData, errors, onChange }: Step1NameProps) => {
   return (
     <div className={classes.stepContent}>
       <h1>Select a name</h1>
