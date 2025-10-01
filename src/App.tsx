@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { Layout } from '@/components';
@@ -16,6 +16,7 @@ function App() {
             <Route path="events" element={<Events />} />
             <Route path="help" element={<Help />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </Provider>
