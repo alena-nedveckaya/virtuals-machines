@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { Icon } from '@/components';
-import { type SortField, type SortDirection } from '../types';
+import { type SortField } from '../types';
 
 import classes from './VMTable.module.scss';
 
 interface VMTableHeaderProps {
-  sortField: SortField | null;
-  sortDirection: SortDirection;
   onSort: (field: SortField) => void;
 }
 
-const VMTableHeader = ({ sortField, sortDirection, onSort }: VMTableHeaderProps) => {
+const VMTableHeader = ({ onSort }: VMTableHeaderProps) => {
   const [isActiveField, setIsActiveField] = useState({} as Record<SortField, boolean>);
+
   const handleSort = (field: SortField) => {
     onSort(field);
     setIsActiveField((prev) => ({ ...prev, [field]: !prev[field] }));
