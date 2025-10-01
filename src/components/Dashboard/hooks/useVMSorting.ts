@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { VM } from '@/store/slices/vmSlice';
-import type { SortField, SortDirection } from './types';
+import type { SortField, SortDirection } from '../types';
 
 export const useVMSorting = (vms: VM[]) => {
   const [sortField, setSortField] = useState<SortField | null>(null);
@@ -55,22 +55,4 @@ export const useVMSorting = (vms: VM[]) => {
     handleSort,
     sortedVMs,
   };
-};
-
-export const useCopyToClipboard = () => {
-  const [isCopied, setIsCopied] = useState(false);
-
-  const copy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-      return true;
-    } catch (err) {
-      console.error('Failed to copy text:', err);
-      return false;
-    }
-  };
-
-  return { copy, isCopied };
 };

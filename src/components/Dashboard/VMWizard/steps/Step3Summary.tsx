@@ -19,7 +19,7 @@ const Step3Summary = ({ formData, onEditGeneral }: Step3SummaryProps) => {
       <div className={classes.card}>
         <div className={classes.row}>
           <div className={classes.label}>Name</div>
-          <div className={classes.value}>{formData.name || '-'}</div>
+          <div className={classes.value}>{formData.name}</div>
         </div>
         <div className={classes.divider} />
         <div className={classes.row}>
