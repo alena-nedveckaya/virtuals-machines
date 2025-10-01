@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Icon } from '@/components';
+import Icon from '@/components/Icon';
 import classes from './Input.module.scss';
 
 interface InputProps {

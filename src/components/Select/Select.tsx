@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import classes from './Select.module.scss';
-import { Icon } from '@/components';
+import Icon from '@/components/Icon';
 
 export interface SelectOption {
   value: string;
